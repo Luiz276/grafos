@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "grafos"
+version = "0.1.0"
+description = "Trabalhos da disciplina de grafos"
+authors = ["Luiz Maurício <2003lmvp@gmail.com>, André William Régis <andrewilliam13@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pytest = "^7.3.0"
+black = "^23.3.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
