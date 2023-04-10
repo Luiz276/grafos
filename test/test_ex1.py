@@ -1,69 +1,74 @@
+from graph.graph import Graph, Vertice, Oriented_edge, Non_oriented_edge
+
 def initGraph():
-    v = {"a", "b", "c", "d"}
-    e = {{"a", "b"}, {"b", "c"}, {"c", "a"}, {"b", "d"}}
+    a = Vertice(1,"a")
+    b = Vertice(2,"b")
+    c = Vertice(3,"c")
+    d = Vertice(4,"d")
+    v = {a,b,c,d}
+    e = {Non_oriented_edge(set(a,b)), Non_oriented_edge(set(a,b)), Non_oriented_edge(set(a,b)), Non_oriented_edge(set(a,b))}
     w = dict()
-    w[{"a", "b"}] = 7
-    w[{"b", "c"}] = 23
-    w[{"c", "a"}] = 12
-    w[{"b", "d"}] = 3
-    grafo = Grafo(v,e,w)
-    return grafo
+    w[e[0]] = 7
+    w[e[1]] = 23
+    w[e[2]] = 12
+    w[e[3]] = 3
+    return Graph(v,e,w)
 
 def test_qtdVertices():
-    grafo = initGraph()
-    output = grafo.qtdVertices()
+    graph = initGraph()
+    output = graph.qtdVertices()
     expected_output = 4
     assert output == expected_output
 
 def test_qtdArestas():
-    grafo = initGraph()
-    output = grafo.qtdArestas()
+    graph = initGraph()
+    output = graph.qtdArestas()
     expected_output = 4
     assert output == expected_output
 
 def test_grau():
-    grafo =initGraph()
-    output = grafo.grau("b")
+    graph =initGraph()
+    output = graph.grau("b")
     expected_output = 3
     assert output == expected_output
 
 def test_rotulo():
-    grafo = initGraph()
-    output = grafo.rotulo("b")
+    graph = initGraph()
+    output = graph.rotulo(2)
     expected_output = "b"
     assert output == expected_output
 
 def test_vizinhos():
-    grafo = initGraph()
-    output = grafo.vizinhos("b")
+    graph = initGraph()
+    output = graph.vizinhos("b")
     expected_output = {"a", "c", "d"}
     assert output == expected_output
 
 def test_haAresta_true():
-    grafo = initGraph()
-    output = grafo.haAresta("a","b")
+    graph = initGraph()
+    output = graph.haAresta("a","b")
     expected_output = True
     assert output == expected_output
 
 def test_haAresta_false():
-    grafo = initGraph()
-    output = grafo.haAresta("a","d")
+    graph = initGraph()
+    output = graph.haAresta("a","d")
     expected_output = False
     assert output == expected_output
 
 def test_peso_inf():
-    grafo = initGraph()
-    output = grafo.peso("a","d")
-    expected_output = NaN
+    graph = initGraph()
+    output = graph.peso("a","d")
+    expected_output = float('inf')
     assert output == expected_output
 
 def test_peso_num():
-    grafo = initGraph()
-    output = grafo.peso("a","b")
+    graph = initGraph()
+    output = graph.peso("a","b")
     expected_output = 7
     assert output == expected_output
 
 def test_ler():
-    output = Grafo(grafo1.txt)
+    output = Graph("graph1.txt")
     expected_output = initGraph()
     assert output == expected_output
