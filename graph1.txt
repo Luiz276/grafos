@@ -5,6 +5,6 @@
 4 d
 *edges
 a b 7
-a c 13
-b c 22
+a c 12
+b c 23
 b d 3

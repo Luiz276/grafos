@@ -28,7 +28,7 @@ def test_qtdArestas():
 
 def test_grau():
     graph =initGraph()
-    output = graph.grau("b")
+    output = graph.grau(Vertice(2, "b"))
     expected_output = 3
     assert output == expected_output
 
@@ -40,35 +40,35 @@ def test_rotulo():
 
 def test_vizinhos():
     graph = initGraph()
-    output = graph.vizinhos("b")
-    expected_output = {"a", "c", "d"}
+    output = graph.vizinhos(Vertice(2, "b"))
+    expected_output = [Vertice(1, "a"), Vertice(3, "c"), Vertice(4, "d")]
     assert output == expected_output
 
 def test_haAresta_true():
     graph = initGraph()
-    output = graph.haAresta("a","b")
+    output = graph.haAresta(Vertice(1, "a"), Vertice(2, "b"))
     expected_output = True
     assert output == expected_output
 
 def test_haAresta_false():
     graph = initGraph()
-    output = graph.haAresta("a","d")
+    output = graph.haAresta(Vertice(1, "a"), Vertice(4, "d"))
     expected_output = False
     assert output == expected_output
 
 def test_peso_inf():
     graph = initGraph()
-    output = graph.peso("a","d")
+    output = graph.peso(Vertice(1, "a"), Vertice(4, "d"))
     expected_output = float('inf')
     assert output == expected_output
 
 def test_peso_num():
     graph = initGraph()
-    output = graph.peso("a","b")
+    output = graph.peso(Vertice(1, "a"), Vertice(2, "b"))
     expected_output = 7
     assert output == expected_output
 
 def test_ler():
-    output = Graph("graph1.txt")
+    output = Graph.fromfilename("graph1.txt")
     expected_output = initGraph()
     assert output == expected_output
