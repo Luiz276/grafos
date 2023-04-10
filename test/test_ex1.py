@@ -1,17 +1,17 @@
-from graph.graph import Graph, Vertice, Oriented_edge, Non_oriented_edge
+from graph.graph import Graph, Vertice, Edge
 
 def initGraph():
     a = Vertice(1,"a")
     b = Vertice(2,"b")
     c = Vertice(3,"c")
     d = Vertice(4,"d")
-    v = {a,b,c,d}
-    e = {Non_oriented_edge(set(a,b)), Non_oriented_edge(set(a,b)), Non_oriented_edge(set(a,b)), Non_oriented_edge(set(a,b))}
-    w = dict()
-    w[e[0]] = 7
-    w[e[1]] = 23
-    w[e[2]] = 12
-    w[e[3]] = 3
+    v = [a,b,c,d]
+    ab = Edge(a,b)
+    bc = Edge(b,c)
+    ca = Edge(c,a)
+    bd = Edge(b,d)
+    e = [ab, bc, ca, bd]
+    w = [(ab,7), (bc, 13), (ca, 22), (bd, 3)]
     return Graph(v,e,w)
 
 def test_qtdVertices():

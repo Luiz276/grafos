@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "grafos"
+name = "graph"
 version = "0.1.0"
 description = "Trabalhos da disciplina de grafos"
 authors = ["Luiz Maurício <2003lmvp@gmail.com>, André William Régis <andrewilliam13@gmail.com>"]

@@ -3,37 +3,45 @@ from dataclasses import dataclass
 @dataclass
 class Vertice:
     index:int
-    rotulo:str
+    label:str
+
+    def __eq__(self, __value: object) -> bool:
+        return self.index==__value.index and self.label==__value.label
 
 @dataclass
-class Oriented_edge:
-    origin:Vertice
-    end:Vertice
-
-@dataclass
-class Non_oriented_edge:
-    vertex:set[Vertice]
+class Edge:
+    vertex1:Vertice
+    vertex2:Vertice
+    
+    def __eq__(self, __value: object) -> bool:
+        return (self.vertex1==__value.vertex1 and self.vertex2==__value.vertex2) or (self.vertex1==__value.vertex2 and self.vertex2==__value.vertex1)
 
 @dataclass
 class Graph:
     vectors:list[Vertice]
-    edges:list[Non_oriented_edge]|list[Oriented_edge]
-    weights:dict[Oriented_edge|Non_oriented_edge]
+    edges:list[Edge]
+    weights:dict[Edge]
 
     def __preinit__(filename: str):
         pass
 
-    def qtdVertices():
+    def qtdVertices(self):
+        return len(self.vectors)
+
+    def qtdArestas(self):
+        return len(self.edges)
+
+    def grau(self):
         pass
 
-    def qtdArestas():
+    def rotulo(self):
         pass
 
-    def grau():
+    def vizinhos(self):
         pass
 
-    def rotulo():
+    def haAresta(self):
         pass
 
-    def vizinhos():
+    def peso(self):
         pass
