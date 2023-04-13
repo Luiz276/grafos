@@ -1,17 +1,20 @@
-from graph.graph import Graph, Vertice, Edge
+from pathlib import Path
+
+from graph.graph import Graph, Vertex, Edge
+from graph.reader import import_graph
 
 def initGraph():
-    a = Vertice(1,"a")
-    b = Vertice(2,"b")
-    c = Vertice(3,"c")
-    d = Vertice(4,"d")
+    a = Vertex(1,"a")
+    b = Vertex(2,"b")
+    c = Vertex(3,"c")
+    d = Vertex(4,"d")
     v = [a,b,c,d]
     ab = Edge(a,b)
+    ac = Edge(a,c)
     bc = Edge(b,c)
-    ca = Edge(c,a)
     bd = Edge(b,d)
-    e = [ab, bc, ca, bd]
-    w = [(ab,7), (bc, 13), (ca, 22), (bd, 3)]
+    e = [ab, ac, bc, bd]
+    w = [7.0, 13.0, 22.0, 3.0]
     return Graph(v,e,w)
 
 def test_qtdVertices():
@@ -28,7 +31,7 @@ def test_qtdArestas():
 
 def test_grau():
     graph =initGraph()
-    output = graph.grau(Vertice(2, "b"))
+    output = graph.grau(Vertex(2, "b"))
     expected_output = 3
     assert output == expected_output
 
@@ -40,35 +43,38 @@ def test_rotulo():
 
 def test_vizinhos():
     graph = initGraph()
-    output = graph.vizinhos(Vertice(2, "b"))
-    expected_output = [Vertice(1, "a"), Vertice(3, "c"), Vertice(4, "d")]
+    output = graph.vizinhos(Vertex(2, "b"))
+    expected_output = [Vertex(1, "a"), Vertex(3, "c"), Vertex(4, "d")]
     assert output == expected_output
 
 def test_haAresta_true():
     graph = initGraph()
-    output = graph.haAresta(Vertice(1, "a"), Vertice(2, "b"))
+    output = graph.haAresta(Vertex(1, "a"), Vertex(2, "b"))
     expected_output = True
     assert output == expected_output
 
 def test_haAresta_false():
     graph = initGraph()
-    output = graph.haAresta(Vertice(1, "a"), Vertice(4, "d"))
+    output = graph.haAresta(Vertex(1, "a"), Vertex(4, "d"))
     expected_output = False
     assert output == expected_output
 
 def test_peso_inf():
     graph = initGraph()
-    output = graph.peso(Vertice(1, "a"), Vertice(4, "d"))
+    output = graph.peso(Vertex(1, "a"), Vertex(4, "d"))
     expected_output = float('inf')
     assert output == expected_output
 
 def test_peso_num():
     graph = initGraph()
-    output = graph.peso(Vertice(1, "a"), Vertice(2, "b"))
+    output = graph.peso(Vertex(1, "a"), Vertex(2, "b"))
     expected_output = 7
     assert output == expected_output
 
 def test_ler():
-    output = Graph.fromfilename("graph1.txt")
+    path = Path().resolve(__file__)
+    filepath = path / "test" / "graph1.txt"
+
+    output = import_graph(filepath)
     expected_output = initGraph()
     assert output == expected_output

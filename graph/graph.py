@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class Vertice:
+class Vertex:
     index: int
     label: str
 
@@ -12,8 +12,8 @@ class Vertice:
 
 @dataclass
 class Edge:
-    vertex1: Vertice
-    vertex2: Vertice
+    vertex1: Vertex
+    vertex2: Vertex
 
     def __eq__(self, __value: object) -> bool:
         return (
@@ -23,9 +23,9 @@ class Edge:
 
 @dataclass
 class Graph:
-    vertices: list[Vertice]
+    vertices: list[Vertex]
     edges: list[Edge]
-    weights: list[tuple]
+    weights: list[int | float]
 
     def adjacency_matrix(self):
         adj_matrix = [len(self.vertices)][len(self.vertices)]
@@ -48,7 +48,7 @@ class Graph:
             elif n_vert > 0:
                 n_vert -= 1
                 items = linha.split()
-                vertices.append(Vertice(int(items[0]), items[1]))
+                vertices.append(Vertex(int(items[0]), items[1]))
             elif linha.rstrip() == "*edges":
                 bool_edge = True
             elif bool_edge == True:
@@ -63,7 +63,7 @@ class Graph:
     def qtdArestas(self) -> int:
         return len(self.edges)
 
-    def grau(self, vertice: Vertice) -> int:
+    def grau(self, vertice: Vertex) -> int:
         count = 0
         for edge in self.edges:
             if vertice == edge.vertex1 or vertice == edge.vertex2:
@@ -75,7 +75,7 @@ class Graph:
             if index_vertice == node.index:
                 return node.label
 
-    def vizinhos(self, vertice: Vertice):
+    def vizinhos(self, vertice: Vertex):
         vizinhos = []
         for edge in self.edges:
             if vertice == edge.vertex1:
@@ -84,18 +84,16 @@ class Graph:
                 vizinhos.append(edge.vertex1)
         return vizinhos
 
-    def haAresta(self, u: Vertice, v: Vertice):
-        for edge in self.edges:
-            if u == edge.vertex1 or u == edge.vertex2:
-                if v == edge.vertex1 or v == edge.vertex2:
+    def haAresta(self, u: Vertex, v: Vertex):
+        for i in range(len(self.edges)):
+            if (u == self.edges[i].vertex1 and v == self.edges[i].vertex2) or (v == self.edges[i].vertex1 and u == self.edges[i].vertex2):
+                if self.weights[i] != float("inf"):
                     return True
         return False
 
-    def peso(self, u: Vertice, v: Vertice):
-        for edge in self.edges:
-            if u == edge.vertex1 or u == edge.vertex2:
-                if v == edge.vertex1 or v == edge.vertex2:
-                    for pair in self.weights:
-                        if pair[0] == edge:
-                            return pair[1]
+    def peso(self, u: Vertex, v: Vertex):
+        for i in range(len(self.edges)):
+            if (u == self.edges[i].vertex1 and v == self.edges[i].vertex2) or (v == self.edges[i].vertex1 and u == self.edges[i].vertex2):
+                return self.weights[i]
+
         return float("inf")
