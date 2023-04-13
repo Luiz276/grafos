@@ -27,6 +27,23 @@ class Graph:
     edges: list[Edge]
     weights: list[int | float]
 
+    def get_vertex(self, vertex: str | int | Vertex):
+        if type(vertex) == Vertex:
+            if vertex in self.vertices:
+                return vertex
+        
+        if type(vertex) == str:
+            for v in self.vertices:
+                if v.label == vertex:
+                    return v
+        
+        if type(vertex) == int:
+            for v in self.vertices:
+                if v.index == vertex:
+                    return v
+
+        raise ("Invalid vertex:", vertex)
+
     def adjacency_matrix(self):
         adj_matrix = [len(self.vertices)][len(self.vertices)]
         for edge in self.edges:

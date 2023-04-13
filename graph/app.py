@@ -4,12 +4,13 @@ from pathlib import Path
 
 from reader import import_graph
 from graph import Graph
+from t1_e2_breadth_first import breadth_first_search_print
 
 
 def run_graph(filepath: Path) -> None:
     graph = import_graph(filepath)
 
-    input("Press Enter to show: " + filepath.name)
+    # input("Press Enter to show: " + filepath.name)
 
     match int(sys.argv[1]):
         case 1:
@@ -43,13 +44,17 @@ def run_graph(filepath: Path) -> None:
                     )
 
         case 2:
-            ...
+            breadth_first_search_print(graph, graph.vertices[0])
+
         case 3:
             ...
+
         case 4:
             ...
+
         case 5:
             ...
+
         case 6:
             ...
 
