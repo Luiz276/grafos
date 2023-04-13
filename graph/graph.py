@@ -63,37 +63,41 @@ class Graph:
     def qtdArestas(self) -> int:
         return len(self.edges)
 
-    def grau(self, vertice: Vertex) -> int:
+    def grau(self, vertex: Vertex) -> int:
         count = 0
         for edge in self.edges:
-            if vertice == edge.vertex1 or vertice == edge.vertex2:
+            if vertex == edge.vertex1 or vertex == edge.vertex2:
                 count += 1
         return count
 
-    def rotulo(self, index_vertice: int) -> str:
+    def rotulo(self, index_vertex: int) -> str:
         for node in self.vertices:
-            if index_vertice == node.index:
+            if index_vertex == node.index:
                 return node.label
 
-    def vizinhos(self, vertice: Vertex):
+    def vizinhos(self, vertex: Vertex) -> list[Vertex]:
         vizinhos = []
         for edge in self.edges:
-            if vertice == edge.vertex1:
+            if vertex == edge.vertex1:
                 vizinhos.append(edge.vertex2)
-            elif vertice == edge.vertex2:
+            elif vertex == edge.vertex2:
                 vizinhos.append(edge.vertex1)
         return vizinhos
 
-    def haAresta(self, u: Vertex, v: Vertex):
+    def haAresta(self, u: Vertex, v: Vertex) -> bool:
         for i in range(len(self.edges)):
-            if (u == self.edges[i].vertex1 and v == self.edges[i].vertex2) or (v == self.edges[i].vertex1 and u == self.edges[i].vertex2):
+            if (u == self.edges[i].vertex1 and v == self.edges[i].vertex2) or (
+                v == self.edges[i].vertex1 and u == self.edges[i].vertex2
+            ):
                 if self.weights[i] != float("inf"):
                     return True
         return False
 
-    def peso(self, u: Vertex, v: Vertex):
+    def peso(self, u: Vertex, v: Vertex) -> float:
         for i in range(len(self.edges)):
-            if (u == self.edges[i].vertex1 and v == self.edges[i].vertex2) or (v == self.edges[i].vertex1 and u == self.edges[i].vertex2):
+            if (u == self.edges[i].vertex1 and v == self.edges[i].vertex2) or (
+                v == self.edges[i].vertex1 and u == self.edges[i].vertex2
+            ):
                 return self.weights[i]
 
         return float("inf")
