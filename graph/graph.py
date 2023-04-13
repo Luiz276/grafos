@@ -31,12 +31,12 @@ class Graph:
         if type(vertex) == Vertex:
             if vertex in self.vertices:
                 return vertex
-        
+
         if type(vertex) == str:
             for v in self.vertices:
                 if v.label == vertex:
                     return v
-        
+
         if type(vertex) == int:
             for v in self.vertices:
                 if v.index == vertex:
