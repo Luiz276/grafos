@@ -17,13 +17,16 @@ def run_graph(filepath: Path) -> None:
             print("qtdArestas():", graph.qtdArestas())
 
             for vertex in graph.vertices:
-                print("grau(" + vertex.label + "):", graph.grau(vertex.label))
+                print("grau(" + vertex.label + "):", graph.grau(vertex))
 
             for vertex in graph.vertices:
-                print("rotulo(" + vertex.label + "):", graph.rotulo(vertex.label))
+                print("rotulo(" + str(vertex.index) + "):", graph.rotulo(vertex.index))
 
             for vertex in graph.vertices:
-                print("vizinhos(" + vertex.label + "):", graph.vizinhos(vertex.label))
+                print(
+                    "vizinhos(" + vertex.label + "):",
+                    [neighbor.label for neighbor in graph.vizinhos(vertex)],
+                )
 
             for vertex1 in graph.vertices:
                 for vertex2 in graph.vertices:
