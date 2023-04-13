@@ -14,7 +14,8 @@ def print_search(search: tuple[list[Vertex], list[int], int]) -> None:
             if depths[i] == depth:
                 vertices.append(researcheds[i])
 
-        print("Depth", depth, "vertices:", [v.label for v in vertices])
+        print(f"{depth}: ", end="")
+        print(*[v.index for v in vertices], sep=",")
 
 
 def breadth_first_search(
@@ -43,6 +44,8 @@ def breadth_first_search(
                 researcheds.append(neighbor)
                 depths.append(current_depth + 1)
                 queue.append(neighbor)
+
+    return (researcheds, depths, max_depth)
 
 
 def breadth_first_search_print(graph: Graph, vertex: Vertex | str | int) -> None:
