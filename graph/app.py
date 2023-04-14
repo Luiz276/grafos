@@ -7,11 +7,7 @@ from graph import Graph
 from t1_e2_breadth_first import breadth_first_search_print
 
 
-def run_graph(filepath: Path) -> None:
-    graph = import_graph(filepath)
-
-    # input("Press Enter to show: " + filepath.name)
-
+def run(graph: Graph) -> None:
     match int(sys.argv[1]):
         case 1:
             print("qtdVertices():", graph.qtdVertices())
@@ -67,8 +63,16 @@ def main() -> None:
 
     if len(sys.argv) < 3:
         filepath = path / "test" / "graph1.txt"
-        run_graph(filepath)
+        graph = import_graph(filepath)
+        run(graph)
     else:
-        for arg in sys.argv[2:]:
-            filepath = path / arg
-            run_graph(filepath)
+        if len(sys.argv) == 3:
+            filepath = path / sys.argv[2]
+            graph = import_graph(filepath)
+            run(graph)
+        else:
+            for arg in sys.argv[2:]:
+                graph = import_graph(filepath)
+                filepath = path / arg
+                input("Press Enter to show: " + filepath.name)
+                run(graph)
