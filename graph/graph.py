@@ -63,13 +63,33 @@ class Graph:
 
         raise ("Invalid vertex:", vertex)
 
-    def adjacency_matrix(self):
-        adj_matrix = [len(self.vertices)][len(self.vertices)]
+    def get_adjacency_matrix(self):
+        adjacency_matrix = list()
+        for vertex1 in self.vertices:
+            adjacency_matrix.append(list())
+
+            for vertex2 in self.vertices:
+                edge = Edge(vertex1, vertex2)
+                if edge in self.edges:
+                    adjacency_matrix[-1].append(self.edges.index(edge))
+                else:
+                    adjacency_matrix[-1].append(float('inf'))
+
+    def get_edges_from_a_vertex(self, vertex: Vertex) -> list[edges]:
+        edges = list()
         for edge in self.edges:
-            for pair in self.weights:
-                if pair[0] == edge:
-                    adj_matrix[edge.vertex1.index][edge.vertex2.index] = pair[1]
-        return adj_matrix
+            if edge.vertex1 == vertex or edge.vertex2 == vertex:
+                edges.append(edge)
+        return edges
+                
+    # deprecated
+    # def adjacency_matrix(self):
+    #     adj_matrix = [len(self.vertices)][len(self.vertices)]
+    #     for edge in self.edges:
+    #         for pair in self.weights:
+    #             if pair[0] == edge:
+    #                 adj_matrix[edge.vertex1.index][edge.vertex2.index] = pair[1]
+    #     return adj_matrix
 
     def qtdVertices(self) -> int:
         return len(self.vertices)
