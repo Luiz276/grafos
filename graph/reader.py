@@ -46,12 +46,14 @@ def import_graph(filepath: Path) -> Graph:
             edge_label2 = lines[index].split(" ")[1]
             edge_weight = float(lines[index].split(" ")[2])
 
-            vertex1 = get_vertex(vertices, edge_label1)
-            vertex2 = get_vertex(vertices, edge_label2)
+            if edge_weight != float('inf'):
 
-            edge = Edge(vertex1, vertex2)
-            edges.append(edge)
+                vertex1 = get_vertex(vertices, edge_label1)
+                vertex2 = get_vertex(vertices, edge_label2)
 
-            weights.append(edge_weight)
+                edge = Edge(vertex1, vertex2)
+                edges.append(edge)
+
+                weights.append(edge_weight)
 
         return Graph(vertices, edges, weights)
