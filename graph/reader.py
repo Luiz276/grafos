@@ -14,7 +14,7 @@ def get_vertex(vertices: list[Vertex], label: str) -> Vertex:
 
 def import_graph(filepath: Path) -> Graph:
     with filepath.open() as file:
-        lines = file.read().split("\n")
+        lines = file.read().splitlines()
 
         if not "*vertices" in lines[0]:
             raise ('Invalid format file: not found "*vertices"')

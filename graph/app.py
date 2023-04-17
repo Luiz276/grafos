@@ -5,6 +5,7 @@ from pathlib import Path
 from reader import import_graph
 from graph import Graph
 from t1_e2_breadth_first import breadth_first_search_print
+from t1_e3_eulerian_cycle import eulerian_cycle_print
 from t1_e4_bellman_ford import search_minimal_path_bellman_ford_print
 
 
@@ -44,7 +45,7 @@ def run(graph: Graph) -> None:
             breadth_first_search_print(graph, graph.vertices[0])
 
         case 3:
-            ...
+            eulerian_cycle_print(graph)
 
         case 4:
             search_minimal_path_bellman_ford_print(graph, graph.vertices[0]) # TODO: mudar para qualquer vertice

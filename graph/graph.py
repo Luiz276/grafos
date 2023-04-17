@@ -73,15 +73,15 @@ class Graph:
                 if edge in self.edges:
                     adjacency_matrix[-1].append(self.edges.index(edge))
                 else:
-                    adjacency_matrix[-1].append(float('inf'))
+                    adjacency_matrix[-1].append(float("inf"))
 
-    def get_edges_from_a_vertex(self, vertex: Vertex) -> list[edges]:
+    def get_edges_from_a_vertex(self, vertex: Vertex) -> list[Edge]:
         edges = list()
         for edge in self.edges:
             if edge.vertex1 == vertex or edge.vertex2 == vertex:
                 edges.append(edge)
         return edges
-                
+
     # deprecated
     # def adjacency_matrix(self):
     #     adj_matrix = [len(self.vertices)][len(self.vertices)]

@@ -1,0 +1,13 @@
+*vertices 5
+1 a
+2 b
+3 c
+4 d
+5 e
+*edges
+a b 7
+b c 22
+c a 13
+b d 3
+d e 8
+e b 2
