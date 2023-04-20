@@ -5,6 +5,7 @@ from pathlib import Path
 from reader import import_graph
 from graph import Graph
 from t1_e2_breadth_first import breadth_first_search_print
+from t1_e4_bellman_ford import search_minimal_path_bellman_ford_print
 
 
 def run(graph: Graph) -> None:
@@ -46,7 +47,7 @@ def run(graph: Graph) -> None:
             ...
 
         case 4:
-            ...
+            search_minimal_path_bellman_ford_print(graph, graph.vertices[0]) # TODO: mudar para qualquer vertice
 
         case 5:
             ...
