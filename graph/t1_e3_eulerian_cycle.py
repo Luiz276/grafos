@@ -1,4 +1,5 @@
 from graph import Graph, Vertex, Edge
+from reader import import_graph
 
 
 def eulerian_subcycle(
@@ -63,3 +64,8 @@ def eulerian_cycle_print(graph: Graph) -> None:
     else:
         print(1)
         print(*[vertex.index for vertex in cycle], sep=",")
+
+
+def eulerian_cycle_from_file(filepath: str) -> None:
+    graph = import_graph(filepath)
+    eulerian_cycle_print(graph)

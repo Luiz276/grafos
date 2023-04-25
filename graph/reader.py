@@ -46,8 +46,7 @@ def import_graph(filepath: Path) -> Graph:
             edge_label2 = lines[index].split(" ")[1]
             edge_weight = float(lines[index].split(" ")[2])
 
-            if edge_weight != float('inf'):
-
+            if edge_weight != float("inf"):
                 vertex1 = get_vertex(vertices, edge_label1)
                 vertex2 = get_vertex(vertices, edge_label2)
 

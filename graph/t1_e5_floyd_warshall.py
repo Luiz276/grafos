@@ -1,4 +1,5 @@
 from graph import Graph
+from reader import import_graph
 
 
 def floyd_warshall(graph: Graph) -> list[list[int | float | None]] | None:
@@ -25,3 +26,8 @@ def print_floyd_warshall(graph: Graph) -> None:
         count += 1
         print(f"{count}:", end="")
         print(*line, sep=",")
+
+
+def floyd_warshall_from_file(filepath: str) -> None:
+    graph = import_graph(filepath)
+    print_floyd_warshall(graph)

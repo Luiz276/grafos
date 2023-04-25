@@ -127,7 +127,7 @@ class Graph:
                     return True
         return False
 
-    def peso(self, u: Vertex|int|str, v: Vertex|int|str) -> float:
+    def peso(self, u: Vertex | int | str, v: Vertex | int | str) -> float:
         u = self.get_vertex(u)
         v = self.get_vertex(v)
         for i in range(len(self.edges)):

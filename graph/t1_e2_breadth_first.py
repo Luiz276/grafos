@@ -1,4 +1,5 @@
 from graph import Graph, Vertex
+from reader import import_graph
 
 
 def print_search(search: tuple[list[Vertex], list[int], int]) -> None:
@@ -50,3 +51,8 @@ def breadth_first_search(
 
 def breadth_first_search_print(graph: Graph, vertex: Vertex | str | int) -> None:
     print_search(breadth_first_search(graph, vertex))
+
+
+def breadth_first_search_from_file(filepath: str, vertex: Vertex | str | int):
+    graph = import_graph(filepath)
+    breadth_first_search_print(graph, vertex)

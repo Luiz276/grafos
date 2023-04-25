@@ -1,4 +1,5 @@
 from graph import Graph, Vertex, Edge
+from reader import import_graph
 
 
 def search_minimal_path_bellman_ford(
@@ -15,7 +16,6 @@ def search_minimal_path_bellman_ford(
     antecessors = dict()
 
     for _ in range(graph.qtdVertices() - 1):
-
         for edge in graph.edges:
             vertex1 = edge.vertex1.index
             vertex2 = edge.vertex2.index
@@ -27,7 +27,7 @@ def search_minimal_path_bellman_ford(
             elif distances[vertex2] > distances[vertex1] + graph.peso(vertex2, vertex1):
                 distances[vertex2] = distances[vertex1] + graph.peso(vertex2, vertex1)
                 antecessors[vertex2] = vertex1
-    
+
     for edge in graph.edges:
         vertex1 = edge.vertex1.index
         vertex2 = edge.vertex2.index
@@ -37,10 +37,13 @@ def search_minimal_path_bellman_ford(
             return None
         elif distances[vertex2] > distances[vertex1] + graph.peso(vertex2, vertex1):
             return None
-    
+
     return (distances, antecessors)
 
-def search_minimal_path_bellman_ford_print(graph: Graph, origin_vertex: Vertex | str | int) ->  None:
+
+def search_minimal_path_bellman_ford_print(
+    graph: Graph, origin_vertex: Vertex | str | int
+) -> None:
     distances, antecessors = search_minimal_path_bellman_ford(graph, origin_vertex)
 
     indexes = [vertex.index for vertex in graph.vertices]
@@ -55,6 +58,10 @@ def search_minimal_path_bellman_ford_print(graph: Graph, origin_vertex: Vertex |
             vertex = antecessors[vertex]
         path.reverse()
         print(f"{index}: ", end="")
-        print(*path, sep=',', end="")
+        print(*path, sep=",", end="")
         print(f"; d={distances[index]}")
-        
+
+
+def bellman_ford_from_file(filepath: str, origin_vertex: Vertex | str | int) -> None:
+    graph = import_graph(filepath)
+    search_minimal_path_bellman_ford_print(graph, origin_vertex)

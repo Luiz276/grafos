@@ -49,7 +49,9 @@ def run(graph: Graph) -> None:
             eulerian_cycle_print(graph)
 
         case 4:
-            search_minimal_path_bellman_ford_print(graph, graph.vertices[0]) # TODO: mudar para qualquer vertice
+            search_minimal_path_bellman_ford_print(
+                graph, graph.vertices[0]
+            )  # TODO: mudar para qualquer vertice
 
         case 5:
             print_floyd_warshall(graph)
