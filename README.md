@@ -1,16 +1,23 @@
 # grafos
 Repositório para trabalhos de grafos
 
+## Rodar com interpretador
+Basta rodar o arquivo **__main__.py**. Nenhuma dependência extra é necessária.
+```python
+python3 __main__.py
+```
+
+## Rodar utilizando Poetry
 Para instalar as dependências:
 ```python
 poetry install
 ```
 
-Para execetuar:
+Para executar:
 ```python
 poetry run python graph OPTION FILE
 ```
-
+## Opções de execução
 Sendo OPTION susbtítuido por um número:
 
 1. Apresenta as informações básicas do grafo
