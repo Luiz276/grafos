@@ -11,9 +11,9 @@ Sendo OPTION susbtítuido por um número:
 
 1 - Apresenta as informações básicas do grafo
 2 - Apresenta a busca em largura
-3 - Apresenta ...
-4 - Apresenta ...
-5 - Apresenta ...
+3 - Apresenta a existência, ou não, de ciclo euleriano
+4 - Apresenta Bellman-Ford
+5 - Apresenta Floyd-Warshall
 
 Sendo FILE substítuido por um arquivo de grafo num modelo como o exemplo a seguir:
 
