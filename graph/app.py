@@ -7,6 +7,7 @@ from graph import Graph
 from t1_e2_breadth_first import breadth_first_search_print
 from t1_e3_eulerian_cycle import eulerian_cycle_print
 from t1_e4_bellman_ford import search_minimal_path_bellman_ford_print
+from t1_e5_floyd_warshall import print_floyd_warshall
 
 
 def run(graph: Graph) -> None:
@@ -51,10 +52,7 @@ def run(graph: Graph) -> None:
             search_minimal_path_bellman_ford_print(graph, graph.vertices[0]) # TODO: mudar para qualquer vertice
 
         case 5:
-            ...
-
-        case 6:
-            ...
+            print_floyd_warshall(graph)
 
 
 def main() -> None:
