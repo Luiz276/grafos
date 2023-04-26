@@ -4,7 +4,7 @@ from reader import import_graph
 
 def eulerian_subcycle(
     graph: Graph, vertex: Vertex, edges_reached: list[Edge]
-) -> tuple[list[Vertex] | None, list[Edge]]:
+) -> tuple[list[Vertex] | None, list[Edge] | None]:
     subcycle = [vertex]
 
     while True:
@@ -21,7 +21,7 @@ def eulerian_subcycle(
                 break
 
         if has_unreached_edge == False:
-            return None
+            return None, None
 
         if vertex == subcycle[0]:
             return subcycle, edges_reached
