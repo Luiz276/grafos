@@ -92,7 +92,7 @@ def main() -> None:
     if not files:
         filepath = path / "test" / "graph1.txt"
         graph = import_graph(filepath)
-        run(graph)
+        run(graph, vertex)
     else:
         if len(files) == 1:
             filepath = path / files[0]
