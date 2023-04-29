@@ -10,7 +10,7 @@ from t1_e4_bellman_ford import search_minimal_path_bellman_ford_print
 from t1_e5_floyd_warshall import print_floyd_warshall
 
 
-def run(graph: Graph) -> None:
+def run(graph: Graph, vertex: str | None) -> None:
     match int(sys.argv[1]):
         case 1:
             print("qtdVertices():", graph.qtdVertices())
@@ -43,14 +43,33 @@ def run(graph: Graph) -> None:
                     )
 
         case 2:
-            breadth_first_search_print(graph, graph.vertices[0])
+            if not vertex:
+                vertex = graph.vertices[0]
+            else:
+                if vertex.isdigit():
+                    vertex = int(vertex)  # search by index
+
+                    # else search by label
+
+                vertex = graph.get_vertex(vertex)
+
+            breadth_first_search_print(graph, vertex)
 
         case 3:
             eulerian_cycle_print(graph)
 
         case 4:
+            if not vertex:
+                vertex = graph.vertices[0]
+            else:
+                if vertex.isdigit():
+                    vertex = int(vertex)  # search by index
+
+                    # else search by label
+
+                vertex = graph.get_vertex(vertex)
             search_minimal_path_bellman_ford_print(
-                graph, graph.vertices[0]
+                graph, vertex
             )  # TODO: mudar para qualquer vertice
 
         case 5:
@@ -63,18 +82,25 @@ def main() -> None:
 
     path = Path(__file__).parents[1]
 
-    if len(sys.argv) < 3:
+    if int(sys.argv[1]) == 2 or int(sys.argv[1]) == 4:
+        vertex = sys.argv[2]
+        files = sys.argv[3:]
+    else:
+        vertex = None
+        files = sys.argv[2:]
+
+    if not files:
         filepath = path / "test" / "graph1.txt"
         graph = import_graph(filepath)
         run(graph)
     else:
-        if len(sys.argv) == 3:
-            filepath = path / sys.argv[2]
+        if len(files) == 1:
+            filepath = path / files[0]
             graph = import_graph(filepath)
-            run(graph)
+            run(graph, vertex)
         else:
-            for arg in sys.argv[2:]:
+            for arg in files:
                 graph = import_graph(filepath)
                 filepath = path / arg
                 input("Press Enter to show: " + filepath.name)
-                run(graph)
+                run(graph, vertex)
