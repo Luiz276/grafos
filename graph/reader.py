@@ -4,10 +4,17 @@ from graph import Graph, Vertex, Edge
 from pathlib import Path
 
 
-def get_vertex(vertices: list[Vertex], label: str) -> Vertex:
-    for vertex in vertices:
-        if vertex.label == label:
-            return vertex
+def get_vertex(vertices: list[Vertex], label: str | int) -> Vertex:
+    if isinstance(label, str):
+        #print('str')
+        for vertex in vertices:
+            if vertex.label == label:
+                return vertex
+    if isinstance(label, int):
+        #print("int")
+        for vertex in vertices:
+            if vertex.index == label:
+                return vertex
 
     raise "Vertex label in edge invalid"
 
@@ -47,8 +54,8 @@ def import_graph(filepath: Path) -> Graph:
             edge_weight = float(lines[index].split(" ")[2])
 
             if edge_weight != float("inf"):
-                vertex1 = get_vertex(vertices, edge_label1)
-                vertex2 = get_vertex(vertices, edge_label2)
+                vertex1 = get_vertex(vertices, int(edge_label1))
+                vertex2 = get_vertex(vertices, int(edge_label2))
 
                 edge = Edge(vertex1, vertex2)
                 edges.append(edge)
