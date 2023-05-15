@@ -44,7 +44,8 @@ class Edge:
 class Graph:
     vertices: list[Vertex]
     edges: list[Edge]
-    weights: list[int | float]
+    weights: list[int | float] | None = None
+    oriented: bool = False
 
     def get_vertex(self, vertex: str | int | Vertex):
         if type(vertex) == Vertex:
@@ -109,6 +110,7 @@ class Graph:
             if index_vertex == node.index:
                 return node.label
 
+    # This method is mainly for not oriented graphs
     def vizinhos(self, vertex: Vertex) -> list[Vertex]:
         vizinhos = []
         for edge in self.edges:
@@ -117,6 +119,25 @@ class Graph:
             elif vertex == edge.vertex2:
                 vizinhos.append(edge.vertex1)
         return vizinhos
+
+    def get_vertices_memory_index(self, vertices: list[Vertex]):
+        memory_indexes = list()
+
+        for vertex in vertices:
+            memory_indexes.append(self.vertices.index(vertex))
+        
+        return memory_indexes
+    
+    # Vertex_index is the index in the list, not the number in vertex proprierties
+    def get_neighbors_positive(self, vertex_index: int):
+        vertex = self.vertices[vertex_index]
+        neighbors = list()
+
+        for edge in self.edges:
+            if vertex == edge.vertex1:
+                neighbors.append(edge.vertex2)
+            
+        return self.get_vertices_memory_index(neighbors)
 
     def haAresta(self, u: Vertex, v: Vertex) -> bool:
         for i in range(len(self.edges)):
