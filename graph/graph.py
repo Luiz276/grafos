@@ -137,3 +137,7 @@ class Graph:
                 return self.weights[i]
 
         return float("inf")
+    
+    def peso_by_index(self, edge: Edge):
+        ind = self.edges.index(edge)
+        return self.weights[ind]
