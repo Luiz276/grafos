@@ -47,8 +47,12 @@ def transpose_edges(edges: list[Edge]) -> list[Edge]:
     return edges_transposed
         
 
-def sort_vertices_by_final_times(vertices: list[Vertex] ,finals: list[int]) -> list[int]:
-    new_order = sorted(range(len(finals)), key=lambda k: finals[k], reverse=True)
+def sort_vertices_by_final_times_only_index(finals: list[int]) -> list[int]:
+    return sorted(range(len(finals)), key=lambda k: finals[k], reverse=True)
+
+def sort_vertices_by_final_times(vertices: list[Vertex], finals: list[int]) -> list[int]:
+    new_order = sort_vertices_by_final_times_only_index(finals)
+
     new_vertices = list()
 
     for i in new_order:
@@ -56,7 +60,22 @@ def sort_vertices_by_final_times(vertices: list[Vertex] ,finals: list[int]) -> l
 
     return new_vertices
 
-def strongly_connected_components(graph: Graph):
+def separate_strongly_connected_components(antecessors: list[int], finals: list[int]) -> list[set[int]]:
+    new_order = sort_vertices_by_final_times_only_index(finals)
+
+    components = [{0}]
+
+    for i in new_order[1:]:
+        if antecessors[i] is None:
+            components.append({i})
+        else:
+            for component in components:
+                if antecessors[i] in component:
+                    component.add(i)
+    
+    return components
+
+def search_strongly_connected_components(graph: Graph):
     _, finals = depth_first_search(graph)
 
     edges_transposed = transpose_edges(graph.edges)
@@ -65,6 +84,18 @@ def strongly_connected_components(graph: Graph):
 
     new_graph = Graph(new_vertices, edges_transposed, True)
 
-    antecessors, _ = depth_first_search(new_graph)
+    antecessors, finals = depth_first_search(new_graph)
 
-    return antecessors, new_graph
+    return new_vertices, antecessors, finals
+
+def print_components(vertices: list[Vertex], components: list[set[Vertex]]) -> None:
+    for component in components:
+        print(*[vertices[i].index for i in component], sep=',')
+   
+def search_and_print_strongly_connected_components(graph: Graph):
+
+    vertices, antecessors, finals = search_strongly_connected_components(graph)
+
+    separated_components = separate_strongly_connected_components(antecessors, finals)
+
+    print_components(vertices, separated_components)
