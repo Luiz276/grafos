@@ -62,7 +62,8 @@ class Graph:
                 if v.index == vertex:
                     return v
 
-        raise ("Invalid vertex:", vertex)
+        print ("Invalid vertex:", vertex)
+        raise "invalid vertex"
 
     def get_adjacency_matrix(self):
         adjacency_matrix = list()

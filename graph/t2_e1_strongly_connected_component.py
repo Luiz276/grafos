@@ -1,4 +1,4 @@
-from .graph import Graph, Vertex, Edge
+from graph import Graph, Vertex, Edge
 
 def depth_first_search_visit(graph: Graph, vertex_index: int, researched: set[int], times: list[float], finals: list[float], antecessors: list[int | None], time: int):
     researched.add(vertex_index)

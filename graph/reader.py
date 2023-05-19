@@ -37,13 +37,15 @@ def import_graph(filepath: Path) -> Graph:
 
         for index in range(vertices_number):
             vertex_index = int(lines[index + 1].split(" ")[0])
-            vertex_label = lines[index + 1].split(" ")[1]
+            label = lines[index + 1].split(" ")[1:]
+            print(label)
+            vertex_label = " ".join(label)
             vertex = Vertex(vertex_index, vertex_label)
 
             vertices.append(vertex)
 
-        if not "*edges" in lines[vertices_number + 1]:
-            raise ('Invalid format file: not found "*edges"')
+        if not "*edges" in lines[vertices_number + 1] and not "*arcs" in lines[vertices_number + 1]:
+            raise ('Invalid format file: not found "*edges" or "*arcs"')
 
         edges = list()
         weights = list()
