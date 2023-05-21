@@ -1,7 +1,7 @@
-from graph import Graph, Vertex, Edge
+from graph import Graph, Edge
 
 
-def find_min(edges, graph):
+def find_min(edges: list[Edge], graph: Graph):
     min_value = float("inf")
     min_edge = None
     for edge in edges:
@@ -50,7 +50,7 @@ def print_prim2(graph: Graph) -> None:
     for edge_to_expand in edges_in_tree_generator:
         sum += graph.weights[graph.edges.index(edge_to_expand)]
     print(sum)
-    for edge in edges_in_tree_generator[:-2]:
+    for edge in edges_in_tree_generator[:-1]:
         print(
             f"{edge.vertex1.index}-{edge.vertex2.index}, ",
             end="",
