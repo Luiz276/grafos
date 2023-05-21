@@ -44,8 +44,8 @@ class Edge:
 class Graph:
     vertices: list[Vertex]
     edges: list[Edge]
-    weights: list[int | float] | None = None
-    oriented: bool = False
+    weights: list[int | float]
+    oriented: bool
 
     def get_vertex(self, vertex: str | int | Vertex):
         if type(vertex) == Vertex:
@@ -62,7 +62,7 @@ class Graph:
                 if v.index == vertex:
                     return v
 
-        print ("Invalid vertex:", vertex)
+        print("Invalid vertex:", vertex)
         raise "invalid vertex"
 
     def get_adjacency_matrix(self):
@@ -126,19 +126,37 @@ class Graph:
 
         for vertex in vertices:
             memory_indexes.append(self.vertices.index(vertex))
-        
+
         return memory_indexes
-    
+
     # Vertex_index is the index in the list, not the number in vertex proprierties
-    def get_neighbors_positive(self, vertex_index: int):
+    def get_neighbors_positive_oriented(self, vertex_index: int):
         vertex = self.vertices[vertex_index]
         neighbors = list()
 
         for edge in self.edges:
             if vertex == edge.vertex1:
                 neighbors.append(edge.vertex2)
-            
+
         return self.get_vertices_memory_index(neighbors)
+
+    def get_neighbors_positive_not_oriented(self, vertex_index: int):
+        vertex = self.vertices[vertex_index]
+        neighbors = list()
+
+        for edge in self.edges:
+            if vertex == edge.vertex1:
+                neighbors.append(edge.vertex2)
+            elif vertex == edge.vertex2:
+                neighbors.append(edge.vertex1)
+
+        return self.get_vertices_memory_index(neighbors)
+
+    def get_neighbors_positive(self, vertex_index: int):
+        if self.oriented:
+            return self.get_neighbors_positive_oriented(vertex_index)
+
+        return self.get_neighbors_positive_not_oriented(vertex_index)
 
     def haAresta(self, u: Vertex, v: Vertex) -> bool:
         for i in range(len(self.edges)):
@@ -159,7 +177,7 @@ class Graph:
                 return self.weights[i]
 
         return float("inf")
-    
+
     def peso_by_index(self, edge: Edge):
         ind = self.edges.index(edge)
         return self.weights[ind]

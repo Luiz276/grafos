@@ -6,12 +6,10 @@ from pathlib import Path
 
 def get_vertex(vertices: list[Vertex], label: str | int) -> Vertex:
     if isinstance(label, str):
-        #print('str')
         for vertex in vertices:
             if vertex.label == label:
                 return vertex
     if isinstance(label, int):
-        #print("int")
         for vertex in vertices:
             if vertex.index == label:
                 return vertex
@@ -38,13 +36,16 @@ def import_graph(filepath: Path) -> Graph:
         for index in range(vertices_number):
             vertex_index = int(lines[index + 1].split(" ")[0])
             label = lines[index + 1].split(" ")[1:]
-            print(label)
             vertex_label = " ".join(label)
             vertex = Vertex(vertex_index, vertex_label)
 
             vertices.append(vertex)
 
-        if not "*edges" in lines[vertices_number + 1] and not "*arcs" in lines[vertices_number + 1]:
+        if "*edges" in lines[vertices_number + 1]:
+            oriented = False
+        elif "*arcs" in lines[vertices_number + 1]:
+            oriented = True
+        else:
             raise ('Invalid format file: not found "*edges" or "*arcs"')
 
         edges = list()
@@ -64,4 +65,4 @@ def import_graph(filepath: Path) -> Graph:
 
                 weights.append(edge_weight)
 
-        return Graph(vertices, edges, weights)
+        return Graph(vertices, edges, weights, oriented)

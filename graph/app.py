@@ -10,7 +10,10 @@ from t1_e4_bellman_ford import search_minimal_path_bellman_ford_print
 from t1_e5_floyd_warshall import print_floyd_warshall
 from t2_e3_prim import print_prim2
 from t2_e2_topology import print_ot
-from t2_e1_strongly_connected_component import search_and_print_strongly_connected_components
+from t2_e1_strongly_connected_component import (
+    search_and_print_strongly_connected_components,
+)
+
 
 def run(graph: Graph, vertex: str | None) -> None:
     match int(sys.argv[1]):
@@ -76,17 +79,17 @@ def run(graph: Graph, vertex: str | None) -> None:
 
         case 5:
             print_floyd_warshall(graph)
-        
+
         case 6:
-            #t2_e1
+            # t2_e1
             search_and_print_strongly_connected_components(graph)
 
         case 7:
-            #t2_e2
+            # t2_e2
             print_ot(graph)
 
         case 8:
-            #t2_e3
+            # t2_e3
             print_prim2(graph)
 
 
