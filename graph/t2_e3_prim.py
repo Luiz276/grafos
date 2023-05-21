@@ -1,56 +1,60 @@
 from graph import Graph, Vertex, Edge
 
 
-def find_min(lista, graph):
-    min = float("inf")
-    ret = None
-    for i in lista:
-        ind = graph.edges.index(i)
-        val = graph.weights[ind]
-        if val < min:
-            min = val
-            ret = graph.edges[ind]
-    return ret
+def find_min(edges, graph):
+    min_value = float("inf")
+    min_edge = None
+    for edge in edges:
+        index = graph.edges.index(edge)
+        value = graph.weights[index]
+        if value < min_value:
+            min_value = value
+            min_edge = graph.edges[index]
+    return min_edge
 
 
 def prim3(graph: Graph):
-    F = [graph.vertices[0]]
-    E = []
-    visited = [0] * len(graph.vertices)
-    visited[0] = 1
+    vertices_in_tree_generator = [graph.vertices[0]]
+    edges_in_tree_generator = []
+
+    # Percore até que vertices_in_tree_generator compreenda todos os vértices do grafo
     for _ in range(len(graph.vertices) - 1):
-        l = []
-        for v in F:
+        edges_to_expand_tree_generator = []
+        for v in vertices_in_tree_generator:
             for edge in graph.get_edges_from_a_vertex(v):
                 if (
-                    visited[edge.vertex1.index - 1] == 1
-                    and visited[edge.vertex2.index - 1]
+                    edge.vertex1 in vertices_in_tree_generator
+                    and edge.vertex2 in vertices_in_tree_generator
                 ):
                     continue
                 else:
-                    l.append(edge)
-        e = find_min(l, graph)
-        E.append(e)
-        va = e.vertex1
-        vb = e.vertex2
+                    edges_to_expand_tree_generator.append(edge)
+        edge_to_expand = find_min(edges_to_expand_tree_generator, graph)
+        edges_in_tree_generator.append(edge_to_expand)
+        v = edge_to_expand.vertex1
+        u = edge_to_expand.vertex2
 
-        if va in F:
-            vr = vb
+        if v in vertices_in_tree_generator:
+            new_vertex_reached = u
         else:
-            vr = va
+            new_vertex_reached = v
 
-        F.append(vr)
-        visited[vr.index - 1] = 1
-        # print(E, "--", F)
-    return E
+        vertices_in_tree_generator.append(new_vertex_reached)
+
+    return edges_in_tree_generator
 
 
 def print_prim2(graph: Graph) -> None:
-    E = prim3(graph)
+    edges_in_tree_generator = prim3(graph)
     sum = 0
-    for e in E:
-        sum += graph.weights[graph.edges.index(e)]
+    for edge_to_expand in edges_in_tree_generator:
+        sum += graph.weights[graph.edges.index(edge_to_expand)]
     print(sum)
-    for i in range(len(E) - 1):
-        print(f"{E[i].vertex1.index}-{E[i].vertex2.index}, ", end="")
-    print(f"{E[-1].vertex1.index}-{E[-1].vertex2.index}")
+    for edge in edges_in_tree_generator[:-2]:
+        print(
+            f"{edge.vertex1.index}-{edge.vertex2.index}, ",
+            end="",
+        )
+    print(
+        f"{edges_in_tree_generator[-1].vertex1.index}-{edges_in_tree_generator[-1].vertex2.index}"
+    )
