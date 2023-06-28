@@ -6,8 +6,10 @@ class Vertex:
     index: int
     label: str
 
-    def __eq__(self, __value: object) -> bool:
-        return self.index == __value.index and self.label == __value.label
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Vertex):
+            return NotImplemented
+        return self.index == other.index and self.label == other.label
 
 
 @dataclass
@@ -15,16 +17,18 @@ class Edge:
     vertex1: Vertex
     vertex2: Vertex
 
-    def __eq__(self, __value: object) -> bool:
-        return (
-            self.vertex1 == __value.vertex1 and self.vertex2 == __value.vertex2
-        ) or (self.vertex1 == __value.vertex2 and self.vertex2 == __value.vertex1)
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Edge):
+            return NotImplemented
+        return (self.vertex1 == other.vertex1 and self.vertex2 == other.vertex2) or (
+            self.vertex1 == other.vertex2 and self.vertex2 == other.vertex1
+        )
 
-    def get_another_vertex(self, vertex: Vertex | int | str) -> Vertex:
-        match vertex:
+    def get_another_vertex(self, vertex: Vertex | int | str) -> Vertex | int | str:
+        match type(vertex):
             case Vertex():
-                vertex1 = self.vertex1
-                vertex2 = self.vertex2
+                vertex1: Vertex | int | str = self.vertex1
+                vertex2: Vertex | int | str = self.vertex2
             case int():
                 vertex1 = self.vertex1.index
                 vertex2 = self.vertex2.index
@@ -37,7 +41,7 @@ class Edge:
         elif vertex == vertex2:
             return vertex1
         else:
-            raise ("Vertex", vertex, "not in edge", self)
+            raise Exception("Vertex", vertex, "not in edge", self)
 
 
 @dataclass
@@ -63,7 +67,7 @@ class Graph:
                     return v
 
         print("Invalid vertex:", vertex)
-        raise "invalid vertex"
+        raise Exception("invalid vertex")
 
     def get_adjacency_matrix(self):
         adjacency_matrix = list()

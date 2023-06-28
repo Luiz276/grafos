@@ -8,11 +8,14 @@ from t1_e2_breadth_first import breadth_first_search_print
 from t1_e3_eulerian_cycle import eulerian_cycle_print
 from t1_e4_bellman_ford import search_minimal_path_bellman_ford_print
 from t1_e5_floyd_warshall import print_floyd_warshall
-from t2_e3_prim import print_prim2
-from t2_e2_topology import print_ot
 from t2_e1_strongly_connected_component import (
     search_and_print_strongly_connected_components,
 )
+from t2_e2_topology import print_ot
+from t2_e3_prim import print_prim2
+from t3_e1_edmongds_karp import print_edmongs_karp
+from t3_e2_hopcroft_karp import print_hopcroft_karp
+from t3_e3_vertex_coloring import print_vertex_coloring
 
 
 def run(graph: Graph, vertex: str | None) -> None:
@@ -91,6 +94,18 @@ def run(graph: Graph, vertex: str | None) -> None:
         case 8:
             # t2_e3
             print_prim2(graph)
+
+        case 9:
+            # t3_e1
+            print_edmongs_karp(graph)
+
+        case 10:
+            # t3_e1
+            print_hopcroft_karp(graph)
+
+        case 11:
+            # t3_e1
+            print_vertex_coloring(graph)
 
 
 def main() -> None:

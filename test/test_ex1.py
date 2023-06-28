@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from graph.graph import Graph, Vertex, Edge
-from graph.reader import import_graph
+from graph_solver.graph import Graph, Vertex, Edge
+from graph_solver.reader import import_graph
 
 
 # graph1.txt

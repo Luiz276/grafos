@@ -1,5 +1,5 @@
-from graph.graph import Graph, Vertex, Edge
-from graph.t2_e1_strongly_connected_component import (
+from graph_solver.graph import Graph, Vertex, Edge
+from graph_solver.t2_e1_strongly_connected_component import (
     depth_first_search,
     sort_vertices_by_final_times,
     search_and_print_strongly_connected_components,
