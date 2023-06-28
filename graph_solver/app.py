@@ -13,7 +13,7 @@ from t2_e1_strongly_connected_component import (
 )
 from t2_e2_topology import print_ot
 from t2_e3_prim import print_prim2
-from t3_e1_edmongds_karp import print_edmongs_karp
+from graph_solver.t3_e1_edmonds_karp import print_edmonds_karp
 from t3_e2_hopcroft_karp import print_hopcroft_karp
 from t3_e3_vertex_coloring import print_vertex_coloring
 
@@ -97,7 +97,7 @@ def run(graph: Graph, vertex: str | None) -> None:
 
         case 9:
             # t3_e1
-            print_edmongs_karp(graph)
+            print_edmonds_karp(graph)
 
         case 10:
             # t3_e1

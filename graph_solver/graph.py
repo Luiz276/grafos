@@ -81,6 +81,22 @@ class Graph:
                 else:
                     adjacency_matrix[-1].append(float("inf"))
 
+        return adjacency_matrix
+
+    def get_adjacency_matrix_capacity(self):
+        adjacency_matrix = list()
+        for vertex1 in self.vertices:
+            adjacency_matrix.append(list())
+
+            for vertex2 in self.vertices:
+                edge = Edge(vertex1, vertex2)
+                if edge in self.edges:
+                    adjacency_matrix[-1].append(self.edges.index(edge))
+                else:
+                    adjacency_matrix[-1].append(0)
+
+        return adjacency_matrix
+
     def get_edges_from_a_vertex(self, vertex: Vertex) -> list[Edge]:
         edges = list()
         for edge in self.edges:
@@ -134,18 +150,16 @@ class Graph:
         return memory_indexes
 
     # Vertex_index is the index in the list, not the number in vertex proprierties
-    def get_neighbors_positive_oriented(self, vertex_index: int):
-        vertex = self.vertices[vertex_index]
+    def get_neighbors_positive_oriented(self, vertex: Vertex):
         neighbors = list()
 
         for edge in self.edges:
             if vertex == edge.vertex1:
                 neighbors.append(edge.vertex2)
 
-        return self.get_vertices_memory_index(neighbors)
+        return neighbors
 
-    def get_neighbors_positive_not_oriented(self, vertex_index: int):
-        vertex = self.vertices[vertex_index]
+    def get_neighbors_positive_not_oriented(self, vertex: Vertex):
         neighbors = list()
 
         for edge in self.edges:
@@ -154,13 +168,19 @@ class Graph:
             elif vertex == edge.vertex2:
                 neighbors.append(edge.vertex1)
 
-        return self.get_vertices_memory_index(neighbors)
+        return neighbors
 
-    def get_neighbors_positive(self, vertex_index: int):
+    def get_neighbors_positive(self, vertex: Vertex):
         if self.oriented:
-            return self.get_neighbors_positive_oriented(vertex_index)
+            return self.get_neighbors_positive_oriented(vertex)
 
-        return self.get_neighbors_positive_not_oriented(vertex_index)
+        return self.get_neighbors_positive_not_oriented(vertex)
+
+    # To support legacy code
+    def get_neighbors_positive_by_inner_index(self, index: int):
+        return self.get_vertices_memory_index(
+            self.get_neighbors_positive(self.vertices[index])
+        )
 
     def haAresta(self, u: Vertex, v: Vertex) -> bool:
         for i in range(len(self.edges)):
@@ -185,3 +205,10 @@ class Graph:
     def peso_by_index(self, edge: Edge):
         ind = self.edges.index(edge)
         return self.weights[ind]
+
+    def add_weight(self, edge: Edge, weight_addition: float) -> None:
+        u = self.get_vertex(edge.vertex1)
+        v = self.get_vertex(edge.vertex2)
+        for i in range(len(self.edges)):
+            if u == self.edges[i].vertex1 and v == self.edges[i].vertex2:
+                self.weights[i] += weight_addition

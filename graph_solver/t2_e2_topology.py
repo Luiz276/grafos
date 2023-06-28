@@ -13,7 +13,7 @@ def dfs_visit_ot(
     researched.add(vertex_index)
     time += 1
     times[vertex_index] = time
-    for u in graph.get_neighbors_positive(vertex_index):
+    for u in graph.get_neighbors_positive_by_inner_index(vertex_index):
         if u not in researched:
             dfs_visit_ot(graph, u, researched, times, finals, time, stackO)
     time += 1
