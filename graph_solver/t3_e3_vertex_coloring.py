@@ -38,4 +38,4 @@ def print_vertex_coloring(graph: Graph) -> None:
     n_cromatico = max(res.values())+1
     for i in range(1,len(graph.vertices)+1):
         print(f"Vértice {i} -> cor {res[i]}")
-    print(f"Número cromático: {n_cromatico}")
+    print(f"Número cromático: {n_cromatico} cores utilizadas")
