@@ -95,11 +95,16 @@ class Graph:
             adjacency_matrix.append(list())
 
             for vertex2 in self.vertices:
-                edge = Edge(vertex1, vertex2)
-                if edge in self.edges:
-                    adjacency_matrix[-1].append(self.edges.index(edge))
-                else:
+                found = False
+                for i in range(len(self.edges)):
+                    edge = self.edges[i]
+                    if edge.vertex1 == vertex1 and edge.vertex2 == vertex2:
+                        adjacency_matrix[-1].append(self.weights[i])
+                        found = True
+                        break
+                if not found:
                     adjacency_matrix[-1].append(0)
+
 
         return adjacency_matrix
 
@@ -159,9 +164,12 @@ class Graph:
     def get_neighbors_positive_oriented(self, vertex: Vertex):
         neighbors = list()
 
-        for edge in self.edges:
+        for i in range(len(self.edges)):
+            edge = self.edges[i]
             if vertex == edge.vertex1:
-                neighbors.append(edge.vertex2)
+                weight = self.weights[i]
+                if weight > 0:
+                    neighbors.append(edge.vertex2)
 
         return neighbors
 
@@ -196,6 +204,15 @@ class Graph:
                 if self.weights[i] != float("inf"):
                     return True
         return False
+
+    def peso_oriented(self, u: Vertex | int | str, v: Vertex | int | str) -> float:
+        u = self.get_vertex(u)
+        v = self.get_vertex(v)
+        for i in range(len(self.edges)):
+            if u == self.edges[i].vertex1 and v == self.edges[i].vertex2:
+                return self.weights[i]
+
+        return float("inf")
 
     def peso(self, u: Vertex | int | str, v: Vertex | int | str) -> float:
         u = self.get_vertex(u)
