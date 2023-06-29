@@ -11,6 +11,9 @@ class Vertex:
             return NotImplemented
         return self.index == other.index and self.label == other.label
 
+    def __hash__(self):
+        return hash(self.index)
+
 
 @dataclass
 class Edge:
@@ -25,16 +28,19 @@ class Edge:
         )
 
     def get_another_vertex(self, vertex: Vertex | int | str) -> Vertex | int | str:
-        match type(vertex):
+        match vertex:
             case Vertex():
                 vertex1: Vertex | int | str = self.vertex1
                 vertex2: Vertex | int | str = self.vertex2
+                #print("vert")
             case int():
                 vertex1 = self.vertex1.index
                 vertex2 = self.vertex2.index
+                #print("int")
             case str():
                 vertex1 = self.vertex1.label
                 vertex2 = self.vertex2.label
+                #print("str")
 
         if vertex == vertex1:
             return vertex2
