@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 
-@dataclass
+@dataclass(frozen=True)
 class Vertex:
     index: int
     label: str
@@ -15,7 +15,7 @@ class Vertex:
         return hash(self.index)
 
 
-@dataclass
+@dataclass(frozen=True)
 class Edge:
     vertex1: Vertex
     vertex2: Vertex
@@ -50,7 +50,7 @@ class Edge:
             raise Exception("Vertex", vertex, "not in edge", self)
 
 
-@dataclass
+@dataclass(frozen=True)
 class Graph:
     vertices: list[Vertex]
     edges: list[Edge]
