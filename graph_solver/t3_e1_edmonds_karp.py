@@ -2,7 +2,7 @@ from graph import Graph, Edge, Vertex
 
 
 def search_breadth_first_edmonds_karp(
-    residual_network: Graph, source: Vertex, sink: Vertex
+    graph: Graph, residual_network: Graph, source: Vertex, sink: Vertex
 ) -> tuple[list[Vertex], int] | None:
     antecessors = dict()
 
@@ -10,16 +10,18 @@ def search_breadth_first_edmonds_karp(
     queue = [source]
     while len(queue) > 0:
         vertex = queue.pop(0)
-        for neighbor in residual_network.get_neighbors_positive(vertex):
+        neighbors = residual_network.get_neighbors_positive(vertex)
+        for neighbor in neighbors:
             if (
                 neighbor not in visited_vertexes
-                and residual_network.peso(vertex, neighbor) > 0
+                and residual_network.peso_oriented(vertex, neighbor) > 0
             ):
                 visited_vertexes.add(neighbor)
-                antecessors[vertex] = neighbor
+                antecessors[neighbor] = vertex
 
                 if neighbor == sink:
                     max_local_flux = float("inf")
+                    is_augmented = False
                     augmented_path = [sink]
                     current = sink
                     while current != source:
@@ -27,10 +29,16 @@ def search_breadth_first_edmonds_karp(
                         augmented_path = [antecessor] + augmented_path
 
                         max_local_flux = min(
-                            max_local_flux, residual_network.peso(antecessor, current)
+                            max_local_flux, residual_network.peso_oriented(antecessor, current)
                         )
+                        if graph.peso_oriented(antecessor, current) > 0:
+                            is_augmented = True
                         current = antecessor
-                    return augmented_path, max_local_flux
+
+                    if is_augmented:
+                        return augmented_path, max_local_flux
+
+                queue.append(neighbor)
 
     return None
 
@@ -57,8 +65,6 @@ def generate_residual_network(graph: Graph) -> Graph:
 
     residual_flux_edges = list()
     residual_flux_weights = list()
-    used_flux_edges = list()
-    used_flux_weights = list()
 
     for i in range(len(adjacency_matrix)):
         for j in range(i, len(adjacency_matrix)):
@@ -76,19 +82,19 @@ def generate_residual_network(graph: Graph) -> Graph:
                 if weight_uv > weight_vu:
                     residual_flux_edges.append(edge_uv)
                     residual_flux_weights.append(weight_uv)
-                    used_flux_edges.append(edge_vu)
-                    used_flux_weights.append(0)
+                    residual_flux_edges.append(edge_vu) # used_flux
+                    residual_flux_weights.append(0) # used_flux
 
                 else:
                     residual_flux_edges.append(edge_vu)
                     residual_flux_weights.append(weight_vu)
-                    used_flux_edges.append(edge_uv)
-                    used_flux_weights.append(0)
+                    residual_flux_edges.append(edge_uv) # used_flux
+                    residual_flux_weights.append(0) # used_flux
 
     residual_network = Graph(
         graph.vertices,
-        residual_flux_edges + used_flux_edges,
-        residual_flux_weights + used_flux_weights,
+        residual_flux_edges,
+        residual_flux_weights,
         True,
     )
 
@@ -101,7 +107,7 @@ def get_max_flux_edmonds_karp(graph: Graph, source: Vertex, sink: Vertex) -> int
     residual_network = generate_residual_network(graph)
 
     while True:
-        path_founded = search_breadth_first_edmonds_karp(residual_network, source, sink)
+        path_founded = search_breadth_first_edmonds_karp(graph, residual_network, source, sink)
         if path_founded is None:
             return max_flux
 
@@ -110,7 +116,7 @@ def get_max_flux_edmonds_karp(graph: Graph, source: Vertex, sink: Vertex) -> int
 
         for i in range(len(augmented_path) - 1):
             edge = Edge(augmented_path[i], augmented_path[i + 1])
-            residual_network.add_weight(edge, max_local_flux)
+            residual_network.add_weight(edge, -max_local_flux)
             edge = Edge(augmented_path[i + 1], augmented_path[i])
             residual_network.add_weight(edge, max_local_flux)
 
