@@ -92,12 +92,16 @@ def get_max_matching_hopcraft_karp(graph: Graph):
                 if depth_first_hopcroft_karp(graph, distance, mate, vertex):
                     max_matching += 1
     
-    return max_matching, mate
+    return max_matching, mate, vertices_X
 
 
 def print_hopcroft_karp(graph: Graph) -> None:
     
-    max_matching, mate = get_max_matching_hopcraft_karp(graph)
+    max_matching, mate, vertices_X = get_max_matching_hopcraft_karp(graph)
 
     print(f"Emparelhamento máximo: {max_matching}")
-    print(f"Emparelhamentos: {mate}")
+    print(f"Emparelhamentos:")
+
+    for vertex in vertices_X:
+        if mate[vertex] is not None:
+            print(f"{vertex.label} - {mate[vertex].label}")
